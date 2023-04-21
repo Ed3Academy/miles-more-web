@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const formatIpfsUrl = ipfsUrl => {
   if (ipfsUrl?.indexOf('ipfs://') === 0) {
     return ipfsUrl.replace('ipfs://', 'https://ipfs.io/ipfs/')
@@ -9,6 +7,6 @@ export const formatIpfsUrl = ipfsUrl => {
 
 export const getIpfs = async ipfsUrl => {
   const uri = formatIpfsUrl(ipfsUrl)
-  const { data } = await axios.get(uri)
-  return data
+  const data = await fetch(uri)
+  return data.json()
 }
