@@ -23,7 +23,7 @@ const Home = () => {
   const [mounted, setMounted] = useState(false)
   const [isExchanging, setIsExchanging] = useState(false)
   const [isTicketModalOpen, setIsTicketModalOpen] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false)
   const [nftList, setNftList] = useState([])
   const [ticketNftList, setTicketNftList] = useState([])
   const [isLoadingNft, setIsLoadingNft] = useState(false)
@@ -156,7 +156,7 @@ const Home = () => {
   }
 
   const openDetail = async () => {
-    setIsModalOpen(true)
+    setIsCouponModalOpen(true)
     setIsLoadingNft(true)
     const couponNum = Number(balanceCoupon.toString())
     const readTokenId = []
@@ -217,61 +217,59 @@ const Home = () => {
       <main className={styles.main}>
         <Title>Ed3 Miles&More 星享计划</Title>
         <ConnectButton />
-        <Card style={{ width: 600, marginTop: 20 }}>
-          <Row gutter={[20, 20]}>
-            <Col span={24}>
-              <Card title="机票价格" loading={isLoadingTicketPrice}>
-                {ticketPrice && <p>{formatBigNumber(ticketPrice)} MATIC</p>}
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card
-                title="已购机票"
-                loading={isLoadingUserTickets}
-                extra={
-                  <Button type="link" onClick={openTicketDetail}>
-                    详情
-                  </Button>
-                }
-              >
-                {userTickets && <p>{userTickets.toString()} 张</p>}
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card title="剩余机票" loading={isLoadingMaxSupply || isLoadingTotalSupply}>
-                {maxSupply && totalSupply && <p>{Number(maxSupply.toString()) - Number(totalSupply.toString())} 张</p>}
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card title="我的积分" loading={isLoadingPoint}>
-                {balancePoint && <p>{balancePoint.value.toString()}</p>}
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card
-                title="我的优惠券"
-                loading={isLoadingCoupon}
-                extra={
-                  <Button type="link" onClick={openDetail}>
-                    详情
-                  </Button>
-                }
-              >
-                {balanceCoupon && <p>{balanceCoupon.toString()} 张</p>}
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Button type="primary" block loading={isLoadingMintStart || isLoadingMint} onClick={() => mint?.()}>
-                购买机票
-              </Button>
-            </Col>
-            <Col span={24}>
-              <Button block loading={isExchanging} onClick={exchangeCoupon}>
-                兑换优惠券
-              </Button>
-            </Col>
-          </Row>
-        </Card>
+        <Row gutter={[20, 20]} style={{ width: 600, marginTop: 20 }}>
+          <Col span={24}>
+            <Card title="机票价格" loading={isLoadingTicketPrice}>
+              {ticketPrice && <p>{formatBigNumber(ticketPrice)} MATIC</p>}
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card
+              title="已购机票"
+              loading={isLoadingUserTickets}
+              extra={
+                <Button type="link" onClick={openTicketDetail}>
+                  详情
+                </Button>
+              }
+            >
+              {userTickets && <p>{userTickets.toString()} 张</p>}
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="剩余机票" loading={isLoadingMaxSupply || isLoadingTotalSupply}>
+              {maxSupply && totalSupply && <p>{Number(maxSupply.toString()) - Number(totalSupply.toString())} 张</p>}
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title="我的积分" loading={isLoadingPoint}>
+              {balancePoint && <p>{balancePoint.value.toString()}</p>}
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card
+              title="我的优惠券"
+              loading={isLoadingCoupon}
+              extra={
+                <Button type="link" onClick={openDetail}>
+                  详情
+                </Button>
+              }
+            >
+              {balanceCoupon && <p>{balanceCoupon.toString()} 张</p>}
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Button type="primary" block loading={isLoadingMintStart || isLoadingMint} onClick={() => mint?.()}>
+              购买机票
+            </Button>
+          </Col>
+          <Col span={24}>
+            <Button block loading={isExchanging} onClick={exchangeCoupon}>
+              兑换优惠券
+            </Button>
+          </Col>
+        </Row>
         <Modal title="我的机票" footer={null} open={isTicketModalOpen} onCancel={() => setIsTicketModalOpen(false)}>
           {isLoadingTicketNft && (
             <div className={styles.spin}>
@@ -290,7 +288,7 @@ const Home = () => {
             </Row>
           )}
         </Modal>
-        <Modal title="我的优惠券" footer={null} open={isModalOpen} onCancel={() => setIsModalOpen(false)}>
+        <Modal title="我的优惠券" footer={null} open={isCouponModalOpen} onCancel={() => setIsCouponModalOpen(false)}>
           {isLoadingNft && (
             <div className={styles.spin}>
               <Spin size="large" />
